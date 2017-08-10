@@ -2,16 +2,18 @@ package com.example.enums.model;
 
 import com.example.enums.model.types.IceHockey;
 import com.example.enums.model.types.Soccer;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
+import java.util.NoSuchElementException;
 
 public enum Category {
 
-    ICE_HOCKEY("ice_hockey", Stream.of(IceHockey.values())),
-    SOCCER("soccer", Stream.of(Soccer.values()));
+    ICE_HOCKEY("ice_hockey", IceHockey.values()),
+    SOCCER("soccer", Soccer.values());
 
     // Reverse-lookup map for getting a day from an abbreviation
     private static final Map<String, Category> lookup = new HashMap<>();
@@ -22,30 +24,40 @@ public enum Category {
         }
     }
 
-    private Stream<EventType> typeStream;
     private String name;
+    private EventType[] eventTypes;
 
-    Category(String name, Stream<EventType> values) {
+    Category(String name, EventType[] eventTypes) {
         this.name = name;
-        this.typeStream = values;
+        this.eventTypes = eventTypes;
     }
 
-    public static Category get(String name) {
-        lookup.computeIfAbsent(name, key -> {
+    @JsonCreator
+    public static Category get(final String name) {
+        if (name == null) throw new IllegalArgumentException("category name is null");
+        final String categoryName = name.toLowerCase();
+        lookup.computeIfAbsent(categoryName, key -> {
             throw new IllegalArgumentException(key + " not found in categories");
         });
-        return lookup.get(name);
+        return lookup.get(categoryName);
     }
 
-    public Stream<EventType> getTypeStream() {
-        return typeStream;
+    public EventType findByName(String name) {
+        if (eventTypes == null) throw new IllegalArgumentException("category has no ");
+        if (name == null) throw new IllegalArgumentException("event name is null");
+
+        return Arrays.stream(this.eventTypes)
+                .filter(x -> x.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("event type with name" + name + "not found"));
     }
 
-    public Optional<EventType> findByName(String name) {
-        return this.typeStream.filter(x -> x.getName().equals(name)).findFirst();
-    }
-
+    @JsonValue
     public String getName() {
         return name;
+    }
+
+    public EventType[] getEventTypes() {
+        return eventTypes;
     }
 }

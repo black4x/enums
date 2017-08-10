@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class EventRest {
 
     @PostMapping()
     public EventType createEvent(@Valid @RequestBody Event event) {
-        String categotyName = "ice_hockey";
-        return Category.get(categotyName).findByName(event.type).orElseThrow(() -> new IllegalStateException());
+        return Category.get("ice_hockey").findByName(event.type);
     }
 
     @GetMapping
@@ -25,6 +26,17 @@ public class EventRest {
         Event event = new Event();
         event.type = IceHockey.GOAL.getName();
         return event;
+    }
+
+    @GetMapping(path = "/cat")
+    public Map<String, EventType[]> getAllCategories() {
+        Map<String, EventType[]> result = new HashMap<>();
+
+        for (Category category : Category.values()) {
+            result.put(category.getName(), category.getEventTypes());
+        }
+
+        return result;
     }
 
 }
