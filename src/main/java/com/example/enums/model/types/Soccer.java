@@ -17,11 +17,6 @@ public enum Soccer implements EventType {
     }
 
     @Override
-    public String toString() {
-        return this.name;
-    }
-
-    @Override
     public String getName() {
         return name;
     }
