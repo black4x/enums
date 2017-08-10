@@ -35,21 +35,19 @@ public enum Category {
     @JsonCreator
     public static Category get(final String name) {
         if (name == null) throw new IllegalArgumentException("category name is null");
-        final String categoryName = name.toLowerCase();
-        lookup.computeIfAbsent(categoryName, key -> {
+        lookup.computeIfAbsent(name, key -> {
             throw new IllegalArgumentException(key + " not found in categories");
         });
-        return lookup.get(categoryName);
+        return lookup.get(name);
     }
 
     public EventType findByName(final String name) {
         if (eventTypes == null) throw new IllegalArgumentException("category has no ");
         if (name == null) throw new IllegalArgumentException("event name is null");
-        final String eventName = name.toLowerCase();
         return Arrays.stream(this.eventTypes)
-                .filter(x -> x.getName().equals(eventName))
+                .filter(x -> x.getName().equals(name))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("event type with name" + eventName + "not found"));
+                .orElseThrow(() -> new NoSuchElementException("event type with name" + name + "not found"));
     }
 
     @JsonValue
