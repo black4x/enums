@@ -38,6 +38,7 @@ public class CategoryTest {
             result.put(category.getName(), category.getEventTypes());
         }
 
-        System.out.println(MAPPER.writeValueAsString(result));
+        String categoriesJson = "{soccer:[goal,info,penalty],ice_hockey:[goal,info]}";
+        assertThat(MAPPER.writeValueAsString(result).replaceAll("\"", "")).isEqualTo(categoriesJson);
     }
 }
