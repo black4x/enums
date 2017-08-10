@@ -1,6 +1,6 @@
 package com.example.enums.rest;
 
-import com.example.enums.dto.Event;
+import com.example.enums.dto.EventDTO;
 import com.example.enums.model.Category;
 import com.example.enums.model.EventType;
 import com.example.enums.model.types.IceHockey;
@@ -17,15 +17,15 @@ import java.util.Map;
 public class EventRest {
 
     @PostMapping()
-    public EventType createEvent(@Valid @RequestBody Event event) {
-        return Category.get("ice_hockey").findByName(event.type);
+    public EventType createEvent(@Valid @RequestBody EventDTO eventDTO) {
+        return Category.get("ice_hockey").findByName(eventDTO.type);
     }
 
     @GetMapping
-    public Event sendOneEvent() {
-        Event event = new Event();
-        event.type = IceHockey.GOAL.getName();
-        return event;
+    public EventDTO sendOneEvent() {
+        EventDTO eventDTO = new EventDTO();
+        eventDTO.type = IceHockey.GOAL.getName();
+        return eventDTO;
     }
 
     @GetMapping(path = "/cat")
