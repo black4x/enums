@@ -1,6 +1,6 @@
 package com.example.enums.model;
 
-import com.example.enums.model.types.Ice_Hockey;
+import com.example.enums.model.types.IceHockey;
 import com.example.enums.model.types.Soccer;
 
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public enum Category {
 
-    ICE_HOCKEY("ice_hockey", Stream.of(Ice_Hockey.values())),
+    ICE_HOCKEY("ice_hockey", Stream.of(IceHockey.values())),
     SOCCER("soccer", Stream.of(Soccer.values()));
 
     // Reverse-lookup map for getting a day from an abbreviation
@@ -30,7 +30,7 @@ public enum Category {
         this.typeStream = values;
     }
 
-    public static Category getByName(String name) {
+    public static Category get(String name) {
         lookup.computeIfAbsent(name, key -> {
             throw new IllegalArgumentException(key + " not found in categories");
         });

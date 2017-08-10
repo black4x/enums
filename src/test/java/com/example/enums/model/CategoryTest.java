@@ -9,16 +9,16 @@ public class CategoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void findNotExistingCategory() {
-        Category.getByName("error");
+        Category.get("error");
     }
 
     @Test
     public void getOneCategory() {
-        assertThat(Category.getByName("ice_hockey")).isEqualTo(Category.ICE_HOCKEY);
+        assertThat(Category.get("ice_hockey")).isEqualTo(Category.ICE_HOCKEY);
     }
 
     @Test
     public void getEventsFromCategory() {
-        System.out.println(Category.getByName("ice_hockey").findByName("goal"));
+        System.out.println(Category.get("ice_hockey").findByName("goal"));
     }
 }
