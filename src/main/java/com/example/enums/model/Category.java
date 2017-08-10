@@ -42,14 +42,14 @@ public enum Category {
         return lookup.get(categoryName);
     }
 
-    public EventType findByName(String name) {
+    public EventType findByName(final String name) {
         if (eventTypes == null) throw new IllegalArgumentException("category has no ");
         if (name == null) throw new IllegalArgumentException("event name is null");
-
+        final String eventName = name.toLowerCase();
         return Arrays.stream(this.eventTypes)
-                .filter(x -> x.getName().equals(name))
+                .filter(x -> x.getName().equals(eventName))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("event type with name" + name + "not found"));
+                .orElseThrow(() -> new NoSuchElementException("event type with name" + eventName + "not found"));
     }
 
     @JsonValue
