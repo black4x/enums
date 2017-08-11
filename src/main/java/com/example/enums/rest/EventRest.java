@@ -32,7 +32,6 @@ public class EventRest {
         Event savedEvent = eventRepository.save(event);
 
 
-
         EventDTO answer = new EventDTO();
         String foundTypeName = category.getEventName(savedEvent.eventType);
         answer.setType(foundTypeName);

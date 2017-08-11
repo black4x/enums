@@ -47,13 +47,13 @@ public enum Category {
         return Arrays.stream(this.eventTypes)
                 .filter(x -> x.getName().equals(name))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("event type with name" + name + "not found"));
+                .orElseThrow(() -> new NoSuchElementException("event type with name: " + name + " not found"));
     }
 
     public String getEventName(Enum eventType) {
         return Arrays.stream(eventTypes)
                 .filter(typeEnum -> typeEnum.equals(eventType))
-                .findFirst().orElseThrow(() -> new NoSuchElementException("event enum with type" + eventType + "not found in category" + this))
+                .findFirst().orElseThrow(() -> new NoSuchElementException("event enum with type: " + eventType + " not found in category" + this))
                 .getName();
     }
 
