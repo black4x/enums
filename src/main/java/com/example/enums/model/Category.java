@@ -15,7 +15,7 @@ public enum Category {
     ICE_HOCKEY("ice_hockey", IceHockey.values()),
     SOCCER("soccer", Soccer.values());
 
-    // Reverse-lookup map for getting a Category from an abbreviation
+    // Reverse-lookup map for getting a Category from an event name
     private static final Map<String, Category> lookup = new HashMap<>();
 
     static {
