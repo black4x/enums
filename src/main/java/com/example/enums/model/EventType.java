@@ -7,4 +7,6 @@ public interface EventType {
 
     @JsonValue
     String getName();
+
+    Enum getEnum();
 }

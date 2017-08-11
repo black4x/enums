@@ -24,4 +24,9 @@ public enum IceHockey implements EventType {
     public String getFileName() {
         return fileName;
     }
+
+    @Override
+    public Enum getEnum() {
+        return this;
+    }
 }

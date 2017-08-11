@@ -6,8 +6,8 @@ import javax.persistence.*;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    public Long id;
 
     @Enumerated(EnumType.STRING)
-    Enum eventType;
+    public Enum eventType;
 }
