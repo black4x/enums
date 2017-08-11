@@ -1,5 +1,7 @@
 package com.example.enums.model;
 
+import com.example.enums.entity.Event;
+import com.example.enums.entity.Ticker;
 import com.example.enums.model.types.IceHockey;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +24,17 @@ public class CategoryTest {
     @Test
     public void getOneCategory() {
         assertThat(Category.get("ice_hockey")).isEqualTo(Category.ICE_HOCKEY);
+    }
+
+    @Test
+    public void getEventName()
+    {
+        Ticker ticker = new Ticker();
+        ticker.setCategory(Category.ICE_HOCKEY);
+        Event event = new Event();
+        event.setTicker(ticker);
+        event.setEventType(IceHockey.GOAL);
+        assertThat(event.getEventTypeName()).isEqualTo(IceHockey.GOAL.getName());
     }
 
     @Test

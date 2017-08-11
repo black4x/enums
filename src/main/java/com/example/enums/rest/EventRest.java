@@ -7,6 +7,8 @@ import com.example.enums.model.EventType;
 import com.example.enums.model.types.IceHockey;
 import com.example.enums.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,12 +30,13 @@ public class EventRest {
         Category category = Category.get("ice_hockey");
 
         Event event = new Event();
-        event.eventType = category.findByName(eventDTO.getTypeName()).getEnum();
+        event.setEventType(category.findByName(eventDTO.getTypeName()).getEnum());
         Event savedEvent = eventRepository.save(event);
 
 
         EventDTO answer = new EventDTO();
-        String foundTypeName = category.getEventName(savedEvent.eventType);
+        answer.setId(event.getId());
+        String foundTypeName = category.getEventName(savedEvent.getEventType());
         answer.setType(foundTypeName);
         return answer;
     }
@@ -45,7 +48,7 @@ public class EventRest {
         return eventDTO;
     }
 
-    @GetMapping(path = "/cat")
+    @GetMapping(path = "/categories")
     public Map<String, EventType[]> getAllCategories() {
         Map<String, EventType[]> result = new HashMap<>();
 
@@ -56,4 +59,21 @@ public class EventRest {
         return result;
     }
 
+//    @GetMapping(path = "/events")
+//    public Page<EventDTO> getAllEvent(Pageable pageable) {
+//        return eventRepository.findAll(pageable).map(this::convertToDTO);
+//    }
+
+
+    @GetMapping(path = "/events")
+    public Page<Event> getAllEvent(Pageable pageable) {
+        return eventRepository.findAll(pageable);
+    }
+
+    private EventDTO convertToDTO(Event event) {
+        EventDTO eventDTO = new EventDTO();
+        eventDTO.setId(event.getId());
+        eventDTO.setType(event.getEventTypeName());
+        return eventDTO;
+    }
 }
